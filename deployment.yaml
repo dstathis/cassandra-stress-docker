@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cassandra-test
+  namespace: scylla
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: cassandra-stress
+  template:
+    metadata:
+      labels:
+        app: cassandra-stress
+    spec:
+      containers:
+      - name: cassandra-stress
+        image: chrisbelyea/cassandra-stress:latest
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        env:
+        - name: CASSANDRA_HOST
+          value: scylla.scylla
+        - name: STRESS_COMMAND
+          value: "write"
+        - name: STRESS_OPTIONS
+        args: ["$(STRESS_COMMAND)", "-node", "$(CASSANDRA_HOST)", "$(STRESS_OPTIONS)"]
