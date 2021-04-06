@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 # Install cURL
 RUN apt-get update && apt-get --assume-yes install curl gnupg
