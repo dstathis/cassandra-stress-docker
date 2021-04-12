@@ -11,4 +11,7 @@ RUN curl https://downloads.apache.org/cassandra/KEYS | apt-key add -
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install cassandra cassandra-tools
 
+# Install python3
+RUN DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install python3
+
 ENTRYPOINT ["cassandra-stress"]
